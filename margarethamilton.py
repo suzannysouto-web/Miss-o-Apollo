@@ -1,6 +1,6 @@
 import streamlit as st
 
-# -------- ESTADO INICIAL --------
+# -------- ESTADO --------
 if "pagina" not in st.session_state:
     st.session_state.pagina = "inicio"
     st.session_state.indice = 0
@@ -8,6 +8,7 @@ if "pagina" not in st.session_state:
     st.session_state.tentativas = 0
     st.session_state.acertos = 0
     st.session_state.erros = 0
+    st.session_state.respondido = False
 
 # -------- PERGUNTAS --------
 quiz = [
@@ -46,9 +47,10 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("Margaret Elaine Hamilton,a mulher que levou a humanidade à lua.")
+    st.title("INSERIR TÍTULO AQUI")
 
     st.write("Seja bem-vindo(a)! 🌸")
+    st.write("Quiz em homenagem a Margaret Hamilton.")
     st.write("✔ Acerto: +10 pontos")
     st.write("❌ Erro: -5 pontos")
 
@@ -69,16 +71,19 @@ elif st.session_state.pagina == "quiz":
         resposta = st.radio(
             "Escolha uma opção:",
             pergunta["opcoes"],
-            index=None,  # 👈 evita resposta automática
+            index=None,
             key=f"q_{i}"
         )
 
         if st.button("Próxima", key=f"btn_{i}"):
 
             if resposta is None:
-                st.warning("⚠️ Escolha uma opção antes de continuar!")
-            else:
+                st.warning("Escolha uma opção antes de continuar!")
+            elif not st.session_state.respondido:
+
+                st.session_state.respondido = True
                 st.session_state.tentativas += 1
+
                 letra = resposta[0].lower()
 
                 if letra == pergunta["resposta"]:
@@ -89,6 +94,7 @@ elif st.session_state.pagina == "quiz":
                     st.session_state.erros += 1
 
                 st.session_state.indice += 1
+                st.session_state.respondido = False
                 st.rerun()
     else:
         st.session_state.pagina = "final"
@@ -98,20 +104,19 @@ elif st.session_state.pagina == "quiz":
 elif st.session_state.pagina == "final":
     st.title("🏆 Resultado Final")
 
-    st.write(f"🏆 Pontuação: {st.session_state.placar}")
-    st.write(f"🔁 Tentativas: {st.session_state.tentativas}")
-    st.write(f"✅ Acertos: {st.session_state.acertos}")
-    st.write(f"❌ Erros: {st.session_state.erros}")
+    st.write(f"Sua pontuação foi: {st.session_state.placar}")
+    st.write(f"Total de tentativas: {st.session_state.tentativas}")
+    st.write(f"Acertos: {st.session_state.acertos}")
+    st.write(f"Erros: {st.session_state.erros}")
 
-    # Mensagem inteligente baseada no desempenho
-    if st.session_state.acertos >= 8:
-        st.success("🌟 Incrível! Você domina o assunto!")
-    elif st.session_state.acertos >= 5:
-        st.info("👏 Muito bem! Você foi muito bem!")
-    else:
-        st.warning("💡 Continue tentando, você vai melhorar!")
+    st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
+
+    st.write("Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte, inteligente e capaz de transformar o mundo ao seu redor.")
+    st.write("Um exemplo incrível disso é Margaret Hamilton, que fez história na tecnologia e ajudou a levar a humanidade à Lua. ")
+    st.write("Que a sua jornada também seja cheia de conquistas, sonhos realizados e muita inspiração! ")
+    st.write("Feliz Dia das Mulheres! Nunca duvide do seu brilho. 🌷")
 
     if st.button("Reiniciar"):
-        for key in st.session_state.keys():
-            del st.session_state[key]
+        for k in list(st.session_state.keys()):
+            del st.session_state[k]
         st.rerun()
