@@ -107,7 +107,7 @@ elif st.session_state.pagina == "quiz":
             if resposta.startswith(pergunta["resposta"]):
                 st.session_state.placar += 10
             else:
-                st.session_state.placar -= 10
+                st.session_state.placar -= 5
 
             # Evita pontuação negativa
             if st.session_state.placar < 0:
