@@ -1,4 +1,5 @@
-import streamlit as st
+
+   import streamlit as st
 
 # -------- ESTADO INICIAL --------
 if "pagina" not in st.session_state:
@@ -6,6 +7,8 @@ if "pagina" not in st.session_state:
     st.session_state.indice = 0
     st.session_state.placar = 0
     st.session_state.tentativas = 0
+    st.session_state.acertos = 0   # NOVO
+    st.session_state.erros = 0     # NOVO
 
 # -------- PERGUNTAS --------
 quiz = [
@@ -22,7 +25,7 @@ quiz = [
      "opcoes": ["a) 2018", "b) 2017", "c) 2019"], "resposta": "c"},
 
     {"pergunta": "Quantos artigos Margaret Hamilton publicou?",
-     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130"], "resposta": "c"},
+     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130, "d) Mais de 5"], "resposta": "c"},
 
     {"pergunta": "Qual personagem ela interpretou no Mágico de OZ?",
      "opcoes": ["a) Dorothy", "b) Glinda", "c) Bruxa Má do Oeste"], "resposta": "c"},
@@ -44,7 +47,7 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("Margaret Elaine Hemilton,a mulher que levou a humanidade à lua.")
+    st.title(" Margaret Elaine Hamilton,a mulher que levou a humanidade à Lua! 🚀🌕")
 
     st.write("Seja bem-vindo(a)! 🌸")
     st.write("Quiz em homenagem a Margaret Hamilton.")
@@ -74,10 +77,12 @@ elif st.session_state.pagina == "quiz":
 
             if letra == pergunta["resposta"]:
                 st.session_state.placar += 10
+                st.session_state.acertos += 1   # CONTA ACERTO
             else:
                 st.session_state.placar -= 5
                 if st.session_state.placar < 0:
                     st.session_state.placar = 0
+                st.session_state.erros += 1     # CONTA ERRO
 
             st.session_state.indice += 1
             st.rerun()
@@ -89,8 +94,10 @@ elif st.session_state.pagina == "quiz":
 elif st.session_state.pagina == "final":
     st.title("🏆 Resultado Final")
 
-    st.write(f"Pontuação: {st.session_state.placar}")
-    st.write(f"Tentativas: {st.session_state.tentativas}")
+    st.write(f"🏆 Pontuação: {st.session_state.placar}")
+    st.write(f"🔁 Tentativas: {st.session_state.tentativas}")
+    st.write(f"✅ Acertos: {st.session_state.acertos}")   # NOVO
+    st.write(f"❌ Erros: {st.session_state.erros}")       # NOVO
 
     st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
 
@@ -98,7 +105,7 @@ elif st.session_state.pagina == "final":
 Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte,
 inteligente e capaz de transformar o mundo.
 
-Um exemplo incrível disso é Margaret Hamilton, que ajudou a levar a humanidade à Lua 🚀🌕
+
 """)
 
     if st.button("Reiniciar"):
@@ -106,4 +113,6 @@ Um exemplo incrível disso é Margaret Hamilton, que ajudou a levar a humanidade
         st.session_state.indice = 0
         st.session_state.placar = 0
         st.session_state.tentativas = 0
+        st.session_state.acertos = 0   # RESET
+        st.session_state.erros = 0     # RESET
         st.rerun()
