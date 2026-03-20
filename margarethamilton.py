@@ -41,7 +41,7 @@ if st.session_state.pagina == "inicio":
     st.write("🌸 Bem-vindo(a)! 🌸")
     st.write("Quiz em homenagem a Margaret Hamilton.")
     st.write("✔ Acerto: +10 pontos")
-    st.write("❌ Erro: -1 pontos (mínimo 0)")
+    st.write("❌ Erro: -10 pontos (mínimo 0)")
 
     st.write("""
     Feliz Dia das Mulheres! 🌷
@@ -71,7 +71,6 @@ elif st.session_state.pagina == "quiz":
         if st.button("Próxima"):
             st.session_state.tentativas += 1
 
-            # Normaliza a resposta
             letra_escolhida = resposta.strip()[0].lower()
             correta = pergunta["resposta"].strip().lower()
 
@@ -79,8 +78,7 @@ elif st.session_state.pagina == "quiz":
                 st.session_state.placar += 10
                 st.session_state.acertos += 1
             else:
-                # Subtrai 5 pontos, mas nunca deixa negativo
-                st.session_state.placar -= 1
+                st.session_state.placar -= 10
                 if st.session_state.placar < 0:
                     st.session_state.placar = 0
                 st.session_state.erros += 1
