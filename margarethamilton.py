@@ -75,7 +75,8 @@ elif st.session_state.pagina == "quiz":
             key=f"q_{i}"
         )
 
-        if st.button("Próxima", key=f"btn_{i}"):
+        # BOTÃO RESPONDER
+        if st.button("Responder", key=f"resp_{i}"):
 
             if resposta is None:
                 st.warning("Escolha uma opção antes de continuar!")
@@ -93,9 +94,15 @@ elif st.session_state.pagina == "quiz":
                     st.session_state.placar = max(0, st.session_state.placar - 5)
                     st.session_state.erros += 1
 
+                st.rerun()
+
+        # BOTÃO PRÓXIMA (só depois de responder)
+        if st.session_state.respondido:
+            if st.button("Próxima", key=f"next_{i}"):
                 st.session_state.indice += 1
                 st.session_state.respondido = False
                 st.rerun()
+
     else:
         st.session_state.pagina = "final"
         st.rerun()
