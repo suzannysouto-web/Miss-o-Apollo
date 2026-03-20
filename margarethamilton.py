@@ -37,11 +37,11 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("🚀 Margaret Hamilton e a Lua 🌕")
+    st.title("🚀 Margaret Elaine Hamilton,a mulher que levou a humanidade à Lua 🌕")
     st.write("🌸 Bem-vindo(a)! 🌸")
     st.write("Quiz em homenagem a Margaret Hamilton.")
     st.write("✔ Acerto: +10 pontos")
-    st.write("❌ Erro: -5 pontos (mínimo 0)")
+    st.write("❌ Erro: -5 pontos ")
 
     st.write("""
     Feliz Dia das Mulheres! 🌷
