@@ -97,8 +97,7 @@ elif st.session_state.pagina == "quiz":
 
         resposta = st.radio("Escolha:", pergunta["opcoes"], key=i)
 
-        if not st.session_state.respondeu:
-            if st.button("Responder"):
+      
                 st.session_state.tentativas += 1
 
                 if resposta.startswith(pergunta["resposta"]):
