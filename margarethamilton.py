@@ -7,7 +7,7 @@ if "pagina" not in st.session_state:
     st.session_state.placar = 0
     st.session_state.tentativas = 0
 
-# Perguntas com 5 alternativas
+# Perguntas
 quiz = [
     {
         "pergunta": "Em qual programa Margaret Hamilton esteve envolvida?",
@@ -26,7 +26,7 @@ quiz = [
     },
     {
         "pergunta": "Em que ano Margaret Hamilton recebeu a medalha da liberdade?",
-        "opcoes": ["a) 2018", "b) 2017", "c) 2016", "d) 2015", "e) 2020"],
+        "opcoes": ["a) 2018", "b) 2017", "c) 2019", "d) 2015", "e) 2020"],
         "resposta": "c"
     },
     {
@@ -41,7 +41,7 @@ quiz = [
     },
     {
         "pergunta": "Margaret Hamilton estudou no MIT?",
-        "opcoes": ["a) Falso", "b) Verdadeiro", "c) Parcialmente", "d) Não se sabe", "e) Sim, doutorado"],
+        "opcoes": ["a) Falso", "b) Verdadeiro"],
         "resposta": "a"
     },
     {
@@ -62,7 +62,7 @@ quiz = [
     },
     {
         "pergunta": "Margaret Hamilton foi uma grande cientista da computação?",
-        "opcoes": ["a) Verdadeiro", "b) Falso", "c) Parcialmente", "d) Não confirmado", "e) Apenas engenheira"],
+        "opcoes": ["a) Verdadeiro", "b) Falso"],
         "resposta": "a"
     }
 ]
@@ -71,9 +71,20 @@ quiz = [
 if st.session_state.pagina == "inicio":
     st.title("INSERIR TÍTULO AQUI")
 
-    st.write("Bem-vindo(a) ao Quiz!")
+    st.write("🌸 Seja bem-vindo(a)! 🌸")
+    st.write("Este é um Quiz desenvolvido para homenagear Margaret Hamilton.")
+
+    st.write("""
+    Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte,
+    inteligente e capaz de transformar o mundo ao seu redor.
+
+    Um exemplo incrível disso é Margaret Hamilton, que fez história na tecnologia
+    e ajudou a levar a humanidade à Lua 🚀
+    """)
+
     st.write("Cada acerto vale +10 pontos.")
-    st.write("Cada erro -10 pontos (mas nunca fica negativo).")
+    st.write("Erros retiram 10 pontos (mínimo 0).")
+    st.write("Boa sorte! 🍀")
 
     if st.button("Iniciar Quiz"):
         st.session_state.pagina = "quiz"
@@ -99,7 +110,7 @@ elif st.session_state.pagina == "quiz":
             else:
                 st.session_state.placar -= 10
 
-            # 🚫 Impede pontuação negativa
+            # Evita pontuação negativa
             if st.session_state.placar < 0:
                 st.session_state.placar = 0
 
@@ -120,9 +131,9 @@ elif st.session_state.pagina == "final":
     st.write("🌸 Obrigado por participar do quiz! 🌸")
 
     st.write("""
-    Margaret Hamilton foi essencial para levar o homem à Lua 🚀
+    Feliz Dia das Mulheres! 🌷
 
-    Continue acreditando no seu potencial!
+    Continue acreditando no seu potencial e no seu brilho!
     """)
 
     if st.button("Reiniciar"):
@@ -131,3 +142,4 @@ elif st.session_state.pagina == "final":
         st.session_state.placar = 0
         st.session_state.tentativas = 0
         st.rerun()
+      
