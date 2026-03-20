@@ -61,7 +61,7 @@ quiz = [
         "resposta": "a"
     },
     {
-        "pergunta": "Margaret Hamilton foi uma grande cientista da computação?",
+        "pergunta": "Margaret Hamilton foi uma grande cientista da computação.",
         "opcoes": ["a) Verdadeiro", "b) Falso"],
         "resposta": "a"
     }
