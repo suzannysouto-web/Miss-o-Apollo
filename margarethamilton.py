@@ -26,7 +26,7 @@ quiz = [
     },
     {
         "pergunta": "Em que ano Margaret Hamilton recebeu a medalha da liberdade dos Estados Unidos?",
-        "opcoes": ["a) 2018", "b) 2017", "c) 2019"],
+        "opcoes": ["a) 2018", "b) 2017", "c) 2016"],
         "resposta": "c"
     },
     {
