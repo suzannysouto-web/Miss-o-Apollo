@@ -8,6 +8,7 @@ if "pagina" not in st.session_state:
     st.session_state.tentativas = 0
     st.session_state.acertos = 0
     st.session_state.erros = 0
+    st.session_state.respondeu = False
 
 # Perguntas
 quiz = [
@@ -23,7 +24,7 @@ quiz = [
     },
     {
         "pergunta": "Em que ano aconteceu a missão Apollo?",
-        "opcoes": ["a) 2000", "b) 1969", "c) 1980 ", "d) 1970", "e) 1950"],
+        "opcoes": ["a) 2000", "b) 1969", "c) 1980", "d) 1970", "e) 1950"],
         "resposta": "b"
     },
     {
@@ -38,7 +39,7 @@ quiz = [
     },
     {
         "pergunta": "Qual personagem ela interpretou no Mágico de OZ?",
-        "opcoes": ["a) Dorothy", "b) Glinda", "c) Leão", "d) Espantalho", "e) Bruxa Má do Oeste "],
+        "opcoes": ["a) Dorothy", "b) Glinda", "c) Leão", "d) Espantalho", "e) Bruxa Má do Oeste"],
         "resposta": "e"
     },
     {
@@ -71,18 +72,9 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("Margaret Elaine Hamilton,a Mulher que levou a humanidade à lua!🚀🌕")
+    st.title("🚀 Margaret Hamilton e a Lua 🌕")
 
-    st.write("🌸 Seja bem-vindo(a)! 🌸")
-    st.write("Quiz em homenagem a Margaret Hamilton.")
-
-    st.write("""
-    Neste Dia das Mulheres, lembramos o quanto cada mulher é forte,
-    inteligente e capaz de transformar o mundo.
-
-    
-    """)
-
+    st.write("🌸 Bem-vindo(a)! 🌸")
     st.write("✔ Acerto: +10 pontos")
     st.write("❌ Erro: -5 pontos (mínimo 0)")
 
@@ -94,9 +86,8 @@ if st.session_state.pagina == "inicio":
 elif st.session_state.pagina == "quiz":
     i = st.session_state.indice
 
-    # Placar em tempo real
     st.write(f"🏆 Pontos: {st.session_state.placar}")
-    st.write(f"✅ Acertos: {st.session_state.acertos} | ❌ Erros: {st.session_state.erros}")
+    st.write(f"✅ {st.session_state.acertos} | ❌ {st.session_state.erros}")
 
     if i < len(quiz):
         pergunta = quiz[i]
@@ -106,22 +97,29 @@ elif st.session_state.pagina == "quiz":
 
         resposta = st.radio("Escolha:", pergunta["opcoes"], key=i)
 
-        if st.button("Próxima"):
-            st.session_state.tentativas += 1
+        if not st.session_state.respondeu:
+            if st.button("Responder"):
+                st.session_state.tentativas += 1
 
-            if resposta.startswith(pergunta["resposta"]):
-                st.session_state.placar += 10
-                st.session_state.acertos += 1
-            else:
-                st.session_state.placar -= 5
-                st.session_state.erros += 1
+                if resposta.startswith(pergunta["resposta"]):
+                    st.session_state.placar += 10
+                    st.session_state.acertos += 1
+                else:
+                    st.session_state.placar -= 5
+                    st.session_state.erros += 1
 
-            # Evita pontuação negativa
-            if st.session_state.placar < 0:
-                st.session_state.placar = 0
+                # Impede negativo
+                if st.session_state.placar < 0:
+                    st.session_state.placar = 0
 
-            st.session_state.indice += 1
-            st.rerun()
+                st.session_state.respondeu = True
+                st.rerun()
+
+        else:
+            if st.button("Próxima"):
+                st.session_state.indice += 1
+                st.session_state.respondeu = False
+                st.rerun()
 
     else:
         st.session_state.pagina = "final"
@@ -134,11 +132,6 @@ elif st.session_state.pagina == "final":
     st.write(f"🏆 Pontuação: {st.session_state.placar}")
     st.write(f"✅ Acertos: {st.session_state.acertos}")
     st.write(f"❌ Erros: {st.session_state.erros}")
-    st.write(f"🔁 Tentativas: {st.session_state.tentativas}")
-
-    st.write("🌸 Obrigado por participar do quiz! 🌸")
-
-    st.write("Feliz Dia das Mulheres! 🌷")
 
     if st.button("Reiniciar"):
         st.session_state.pagina = "inicio"
@@ -147,4 +140,5 @@ elif st.session_state.pagina == "final":
         st.session_state.tentativas = 0
         st.session_state.acertos = 0
         st.session_state.erros = 0
+        st.session_state.respondeu = False
         st.rerun()
