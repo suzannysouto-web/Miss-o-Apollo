@@ -26,7 +26,7 @@ quiz = [
     },
     {
         "pergunta": "Em que ano Margaret Hamilton recebeu a medalha da liberdade?",
-        "opcoes": ["a) 2018", "b) 2017", "c) 2019", "d) 2015", "e) 2020"],
+        "opcoes": ["a) 2018", "b) 2017", "c) 2016", "d) 2015", "e) 2020"],
         "resposta": "c"
     },
     {
@@ -69,7 +69,7 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("INSERIR TÍTULO AQUI")
+    st.title("Missão Apollo")
 
     st.write("🌸 Seja bem-vindo(a)! 🌸")
     st.write("Este é um Quiz desenvolvido para homenagear Margaret Hamilton.")
