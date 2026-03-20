@@ -1,5 +1,4 @@
-
-   import streamlit as st
+import streamlit as st
 
 # -------- ESTADO INICIAL --------
 if "pagina" not in st.session_state:
@@ -25,7 +24,7 @@ quiz = [
      "opcoes": ["a) 2018", "b) 2017", "c) 2019"], "resposta": "c"},
 
     {"pergunta": "Quantos artigos Margaret Hamilton publicou?",
-     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130", "d) Mais de 5"], "resposta": "c"},
+     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130"], "resposta": "c"},
 
     {"pergunta": "Qual personagem ela interpretou no Mágico de OZ?",
      "opcoes": ["a) Dorothy", "b) Glinda", "c) Bruxa Má do Oeste"], "resposta": "c"},
@@ -47,7 +46,7 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title(" Margaret Elaine Hamilton,a mulher que levou a humanidade à Lua! 🚀🌕")
+    st.title("INSERIR TÍTULO AQUI")
 
     st.write("Seja bem-vindo(a)! 🌸")
     st.write("Quiz em homenagem a Margaret Hamilton.")
@@ -105,7 +104,7 @@ elif st.session_state.pagina == "final":
 Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte,
 inteligente e capaz de transformar o mundo.
 
-
+Um exemplo incrível disso é Margaret Hamilton, que ajudou a levar a humanidade à Lua 🚀🌕
 """)
 
     if st.button("Reiniciar"):
