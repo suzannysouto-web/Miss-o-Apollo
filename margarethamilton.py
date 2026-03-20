@@ -19,7 +19,7 @@ quiz = [
     {
         "pergunta": "Em qual filme Margaret Hamilton atuou?",
         "opcoes": ["a) Caça às Bruxas", "b) Titanic", "c) O Mágico de OZ", "d) Avatar", "e) Frozen"],
-        "resposta": "a"
+        "resposta": "c"
     },
     {
         "pergunta": "Em que ano aconteceu a missão Apollo?",
