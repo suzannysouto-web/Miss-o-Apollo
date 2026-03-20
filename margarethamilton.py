@@ -25,7 +25,7 @@ quiz = [
      "opcoes": ["a) 2018", "b) 2017", "c) 2019"], "resposta": "c"},
 
     {"pergunta": "Quantos artigos Margaret Hamilton publicou?",
-     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130, "d) Mais de 5"], "resposta": "c"},
+     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130", "d) Mais de 5"], "resposta": "c"},
 
     {"pergunta": "Qual personagem ela interpretou no Mágico de OZ?",
      "opcoes": ["a) Dorothy", "b) Glinda", "c) Bruxa Má do Oeste"], "resposta": "c"},
