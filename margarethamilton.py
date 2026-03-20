@@ -80,7 +80,7 @@ elif st.session_state.pagina == "quiz":
             else:
                 st.session_state.placar -= 10
                 if st.session_state.placar < 0:
-                    st.session_state.placar = 0
+                    st.session_state.placar = 10
                 st.session_state.erros += 1
 
             st.session_state.indice += 1
