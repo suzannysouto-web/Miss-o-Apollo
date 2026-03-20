@@ -6,8 +6,8 @@ if "pagina" not in st.session_state:
     st.session_state.indice = 0
     st.session_state.placar = 0
     st.session_state.tentativas = 0
-    st.session_state.acertos = 0   # NOVO
-    st.session_state.erros = 0     # NOVO
+    st.session_state.acertos = 0
+    st.session_state.erros = 0
 
 # -------- PERGUNTAS --------
 quiz = [
@@ -46,10 +46,9 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("INSERIR TÍTULO AQUI")
+    st.title("Margaret Elaine Hamilton,a mulher que levou a humanidade à lua.")
 
     st.write("Seja bem-vindo(a)! 🌸")
-    st.write("Quiz em homenagem a Margaret Hamilton.")
     st.write("✔ Acerto: +10 pontos")
     st.write("❌ Erro: -5 pontos")
 
@@ -67,24 +66,30 @@ elif st.session_state.pagina == "quiz":
         st.subheader(f"Pergunta {i+1}")
         st.write(pergunta["pergunta"])
 
-        resposta = st.radio("Escolha uma opção:", pergunta["opcoes"], key=i)
+        resposta = st.radio(
+            "Escolha uma opção:",
+            pergunta["opcoes"],
+            index=None,  # 👈 evita resposta automática
+            key=f"q_{i}"
+        )
 
-        if st.button("Próxima"):
-            st.session_state.tentativas += 1
+        if st.button("Próxima", key=f"btn_{i}"):
 
-            letra = resposta[0].lower()
-
-            if letra == pergunta["resposta"]:
-                st.session_state.placar += 10
-                st.session_state.acertos += 1   # CONTA ACERTO
+            if resposta is None:
+                st.warning("⚠️ Escolha uma opção antes de continuar!")
             else:
-                st.session_state.placar -= 5
-                if st.session_state.placar < 0:
-                    st.session_state.placar = 0
-                st.session_state.erros += 1     # CONTA ERRO
+                st.session_state.tentativas += 1
+                letra = resposta[0].lower()
 
-            st.session_state.indice += 1
-            st.rerun()
+                if letra == pergunta["resposta"]:
+                    st.session_state.placar += 10
+                    st.session_state.acertos += 1
+                else:
+                    st.session_state.placar = max(0, st.session_state.placar - 5)
+                    st.session_state.erros += 1
+
+                st.session_state.indice += 1
+                st.rerun()
     else:
         st.session_state.pagina = "final"
         st.rerun()
@@ -95,23 +100,18 @@ elif st.session_state.pagina == "final":
 
     st.write(f"🏆 Pontuação: {st.session_state.placar}")
     st.write(f"🔁 Tentativas: {st.session_state.tentativas}")
-    st.write(f"✅ Acertos: {st.session_state.acertos}")   # NOVO
-    st.write(f"❌ Erros: {st.session_state.erros}")       # NOVO
+    st.write(f"✅ Acertos: {st.session_state.acertos}")
+    st.write(f"❌ Erros: {st.session_state.erros}")
 
-    st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
-
-    st.write("""
-Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte,
-inteligente e capaz de transformar o mundo.
-
-Um exemplo incrível disso é Margaret Hamilton, que ajudou a levar a humanidade à Lua 🚀🌕
-""")
+    # Mensagem inteligente baseada no desempenho
+    if st.session_state.acertos >= 8:
+        st.success("🌟 Incrível! Você domina o assunto!")
+    elif st.session_state.acertos >= 5:
+        st.info("👏 Muito bem! Você foi muito bem!")
+    else:
+        st.warning("💡 Continue tentando, você vai melhorar!")
 
     if st.button("Reiniciar"):
-        st.session_state.pagina = "inicio"
-        st.session_state.indice = 0
-        st.session_state.placar = 0
-        st.session_state.tentativas = 0
-        st.session_state.acertos = 0   # RESET
-        st.session_state.erros = 0     # RESET
+        for key in st.session_state.keys():
+            del st.session_state[key]
         st.rerun()
