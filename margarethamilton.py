@@ -41,7 +41,7 @@ if st.session_state.pagina == "inicio":
     st.write("🌸 Bem-vindo(a)! 🌸")
     st.write("Quiz em homenagem a Margaret Hamilton.")
     st.write("✔ Acerto: +10 pontos")
-    st.write("❌ Erro: -5 pontos (mínimo 0)")
+    st.write("❌ Erro: -1 pontos (mínimo 0)")
 
     st.write("""
     Feliz Dia das Mulheres! 🌷
@@ -80,7 +80,7 @@ elif st.session_state.pagina == "quiz":
                 st.session_state.acertos += 1
             else:
                 # Subtrai 5 pontos, mas nunca deixa negativo
-                st.session_state.placar -= 5
+                st.session_state.placar -= 1
                 if st.session_state.placar < 0:
                     st.session_state.placar = 0
                 st.session_state.erros += 1
