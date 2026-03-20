@@ -69,7 +69,7 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("Missão Apollo")
+    st.title("Margaret Hamilton,a mulher que levou a humanidade á lua!🚀🌕")
 
     st.write("🌸 Seja bem-vindo(a)! 🌸")
     st.write("Este é um Quiz desenvolvido para homenagear Margaret Hamilton.")
@@ -78,8 +78,7 @@ if st.session_state.pagina == "inicio":
     Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte,
     inteligente e capaz de transformar o mundo ao seu redor.
 
-    Um exemplo incrível disso é Margaret Hamilton, que fez história na tecnologia
-    e ajudou a levar a humanidade à Lua 🚀
+   
     """)
 
     st.write("Cada acerto vale +10 pontos.")
