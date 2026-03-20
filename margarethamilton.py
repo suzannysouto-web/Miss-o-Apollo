@@ -23,7 +23,7 @@ quiz = [
     },
     {
         "pergunta": "Em que ano aconteceu a missão Apollo?",
-        "opcoes": ["a) 2000", "b) 1969", "c)1980 ", "d) 1970", "e) 1950"],
+        "opcoes": ["a) 2000", "b) 1969", "c) 1980 ", "d) 1970", "e) 1950"],
         "resposta": "b"
     },
     {
@@ -38,7 +38,7 @@ quiz = [
     },
     {
         "pergunta": "Qual personagem ela interpretou no Mágico de OZ?",
-        "opcoes": ["a) Dorothy", "b) Glinda", "c)Leão", "d) Espantalho", "e) Bruxa Má do Oeste "],
+        "opcoes": ["a) Dorothy", "b) Glinda", "c) Leão", "d) Espantalho", "e) Bruxa Má do Oeste "],
         "resposta": "e"
     },
     {
@@ -64,8 +64,8 @@ quiz = [
     },
     {
         "pergunta": "Margaret Hamilton foi uma grande cientista da computação.",
-        "opcoes": ["a) Verdadeiro", "b) Falso"],
-        "resposta": "a"
+        "opcoes": ["a) Falso", "b) Verdadeiro"],
+        "resposta": "b"
     }
 ]
 
