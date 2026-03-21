@@ -1,6 +1,7 @@
 import streamlit as st
 
-# -------- ESTADO --------
+# -------- ESTADO INICIAL --------
+# Inicializamos as variáveis apenas se elas não existirem
 if "pagina" not in st.session_state:
     st.session_state.pagina = "inicio"
     st.session_state.indice = 0
@@ -8,7 +9,6 @@ if "pagina" not in st.session_state:
     st.session_state.tentativas = 0
     st.session_state.acertos = 0
     st.session_state.erros = 0
-    st.session_state.respondido = False
 
 # -------- PERGUNTAS --------
 quiz = [
@@ -22,7 +22,7 @@ quiz = [
      "opcoes": ["a) 2000", "b) 1969", "c) 1970"], "resposta": "b"},
 
     {"pergunta": "Em que ano Margaret Hamilton recebeu a medalha da liberdade?",
-     "opcoes": ["a) 2018", "b) 2017", "c) 2019"], "resposta": "c"},
+     "opcoes": ["a) 2018", "b) 2017", "c) 2016"], "resposta": "c"}, # Corrigido: Foi em 2016
 
     {"pergunta": "Quantos artigos Margaret Hamilton publicou?",
      "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130"], "resposta": "c"},
@@ -31,7 +31,7 @@ quiz = [
      "opcoes": ["a) Dorothy", "b) Glinda", "c) Bruxa Má do Oeste"], "resposta": "c"},
 
     {"pergunta": "Margaret Hamilton estudou no MIT?",
-     "opcoes": ["a) Falso", "b) Verdadeiro"], "resposta": "a"},
+     "opcoes": ["a) Falso", "b) Verdadeiro"], "resposta": "b"}, # Corrigido: Ela trabalhou/liderou o lab no MIT
 
     {"pergunta": "Em qual ano Margaret Hamilton nasceu?",
      "opcoes": ["a) 1989", "b) 1936", "c) 1990"], "resposta": "b"},
@@ -47,12 +47,10 @@ quiz = [
 
 # -------- TELA INICIAL --------
 if st.session_state.pagina == "inicio":
-    st.title("INSERIR TÍTULO AQUI")
-
+    st.title("🚀 Quiz Margaret Hamilton")
     st.write("Seja bem-vindo(a)! 🌸")
-    st.write("Quiz em homenagem a Margaret Hamilton.")
-    st.write("✔ Acerto: +10 pontos")
-    st.write("❌ Erro: -5 pontos")
+    st.write("Teste seus conhecimentos sobre a mulher que cunhou o termo 'Engenharia de Software'.")
+    st.info("✔ Acerto: +10 pontos | ❌ Erro: -5 pontos")
 
     if st.button("Iniciar Quiz"):
         st.session_state.pagina = "quiz"
@@ -60,49 +58,34 @@ if st.session_state.pagina == "inicio":
 
 # -------- QUIZ --------
 elif st.session_state.pagina == "quiz":
-    i = st.session_state.indice
+    idx = st.session_state.indice
 
-    if i < len(quiz):
-        pergunta = quiz[i]
+    if idx < len(quiz):
+        st.subheader(f"Pergunta {idx + 1} de {len(quiz)}")
+        item = quiz[idx]
+        
+        st.write(item["pergunta"])
+        
+        # Usamos o index da pergunta para garantir que o rádio mude a cada rodada
+        escolha = st.radio("Selecione a opção correta:", item["opcoes"], key=f"p_{idx}")
 
-        st.subheader(f"Pergunta {i+1}")
-        st.write(pergunta["pergunta"])
+        if st.button("Confirmar Resposta"):
+            # Lógica de validação
+            letra_escolhida = escolha[0].lower()
+            st.session_state.tentativas += 1
+            
+            if letra_escolhida == item["resposta"]:
+                st.session_state.placar += 10
+                st.session_state.acertos += 1
+                st.success("Resposta Correta!")
+            else:
+                st.session_state.placar = max(0, st.session_state.placar - 5)
+                st.session_state.erros += 1
+                st.error(f"Resposta Incorreta! A correta era a letra {item['resposta']}")
 
-        resposta = st.radio(
-            "Escolha uma opção:",
-            pergunta["opcoes"],
-            index=None,
-            key=f"q_{i}"
-        )
-
-        # BOTÃO RESPONDER
-        if st.button("Responder", key=f"resp_{i}"):
-
-            if resposta is None:
-                st.warning("Escolha uma opção antes de continuar!")
-            elif not st.session_state.respondido:
-
-                st.session_state.respondido = True
-                st.session_state.tentativas += 1
-
-                letra = resposta[0].lower()
-
-                if letra == pergunta["resposta"]:
-                    st.session_state.placar += 10
-                    st.session_state.acertos += 1
-                else:
-                    st.session_state.placar = max(0, st.session_state.placar - 5)
-                    st.session_state.erros += 1
-
-                st.rerun()
-
-        # BOTÃO PRÓXIMA (só depois de responder)
-        if st.session_state.respondido:
-            if st.button("Próxima", key=f"next_{i}"):
-                st.session_state.indice += 1
-                st.session_state.respondido = False
-                st.rerun()
-
+            # Avançar o índice
+            st.session_state.indice += 1
+            st.rerun()
     else:
         st.session_state.pagina = "final"
         st.rerun()
@@ -110,20 +93,21 @@ elif st.session_state.pagina == "quiz":
 # -------- RESULTADO FINAL --------
 elif st.session_state.pagina == "final":
     st.title("🏆 Resultado Final")
+    
+    col1, col2 = st.columns(2)
+    col1.metric("Pontuação Total", f"{st.session_state.placar} pts")
+    col2.metric("Aproveitamento", f"{(st.session_state.acertos / len(quiz)) * 100:.0f}%")
 
-    st.write(f"Sua pontuação foi: {st.session_state.placar}")
-    st.write(f"Total de tentativas: {st.session_state.tentativas}")
-    st.write(f"Acertos: {st.session_state.acertos}")
-    st.write(f"Erros: {st.session_state.erros}")
+    st.write(f"✅ **Acertos:** {st.session_state.acertos}")
+    st.write(f"❌ **Erros:** {st.session_state.erros}")
+    st.write(f"🔁 **Tentativas:** {st.session_state.tentativas}")
 
-    st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
+    st.divider()
+    st.write("### Feliz Dia das Mulheres! 🌸")
+    st.write("Margaret Hamilton não apenas escreveu o código para a Apollo 11, mas provou que o lugar da mulher é onde ela quiser — inclusive na Lua.")
 
-    st.write("Neste Dia das Mulheres, queremos lembrar o quanto cada mulher é forte, inteligente e capaz de transformar o mundo ao seu redor.")
-    st.write("Um exemplo incrível disso é Margaret Hamilton, que fez história na tecnologia e ajudou a levar a humanidade à Lua. ")
-    st.write("Que a sua jornada também seja cheia de conquistas, sonhos realizados e muita inspiração! ")
-    st.write("Feliz Dia das Mulheres! Nunca duvide do seu brilho. 🌷")
-
-    if st.button("Reiniciar"):
-        for k in list(st.session_state.keys()):
-            del st.session_state[k]
+    if st.button("Jogar Novamente"):
+        # Limpa tudo e volta ao início
+        for key in st.session_state.keys():
+            del st.session_state[key]
         st.rerun()
