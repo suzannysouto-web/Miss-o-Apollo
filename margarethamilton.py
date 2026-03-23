@@ -121,10 +121,6 @@ elif st.session_state.pagina == "resultado":
     st.write(f"❌ Erros: {st.session_state.erros}")
     st.write(f"📊 Total de perguntas: {len(perguntas)}")
 
-    
-    if pontuacao_real < 0:
-        st.warning("Sua pontuação ficou abaixo de zero, então foi ajustada para 0.")
-
     st.markdown("---")
 
     st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
