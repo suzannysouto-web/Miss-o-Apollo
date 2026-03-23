@@ -46,12 +46,12 @@ perguntas = [
         "resposta": 0
     },
     {
-        "pergunta": "8) Em qual ano ela nasceu?",
+        "pergunta": "8)  Em qual ano a engenheira Margaret Hamilton nasceu?",
         "opcoes": ["1939", "1989", "1936", "1990", "1920", "1950"],
         "resposta": 2
     },
     {
-        "pergunta": "9) Ela criou qual termo?",
+        "pergunta": "9) Ela é creditada por ter criado o termo:",
         "opcoes": ["Hardware", "Engenharia de Software", "IA", "Ciência de Dados", "Internet", "Algoritmo"],
         "resposta": 1
     },
@@ -125,6 +125,7 @@ elif st.session_state.pagina == "resultado":
 
     st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
     st.write("Neste Dia das Mulheres, celebramos a força e a inteligência de todas as mulheres!")
+    st.write("Feliz Dia das Mulheres!🌷")
     st.write("✨ Nunca duvide do seu brilho! ✨")
 
     if st.button("Reiniciar"):
