@@ -1,121 +1,133 @@
 import streamlit as st
 
-# -------- ESTADO INICIAL --------
+# Inicialização dos estados
 if "pagina" not in st.session_state:
     st.session_state.pagina = "inicio"
-    st.session_state.indice = 0
-    st.session_state.placar = 0
-    st.session_state.tentativas = 0
+    st.session_state.pergunta_atual = 0
+    st.session_state.pontuacao = 0
     st.session_state.acertos = 0
     st.session_state.erros = 0
-    st.session_state.respondido = False
 
-# -------- PERGUNTAS --------
-quiz = [
-    {"pergunta": "Em qual programa Margaret Hamilton esteve envolvida?",
-     "opcoes": ["a) Sputnik", "b) Gêmeos", "c) Mercúrio", "d) Apollo"], "resposta": "d"},
-
-    {"pergunta": "Em qual filme Margaret Hamilton atuou?",
-     "opcoes": ["a) O Mágico de OZ", "b) Titanic", "c) Caça às Bruxas"], "resposta": "a"},
-
-    {"pergunta": "Em que ano aconteceu a missão Apollo?",
-     "opcoes": ["a) 2000", "b) 1969", "c) 1970"], "resposta": "b"},
-
-    {"pergunta": "Em que ano Margaret Hamilton recebeu a medalha da liberdade?",
-     "opcoes": ["a) 2018", "b) 2017", "c) 2019"], "resposta": "c"},
-
-    {"pergunta": "Quantos artigos Margaret Hamilton publicou?",
-     "opcoes": ["a) Mais de 10", "b) Mais de 150", "c) Mais de 130"], "resposta": "c"},
-
-    {"pergunta": "Qual personagem ela interpretou no Mágico de OZ?",
-     "opcoes": ["a) Dorothy", "b) Glinda", "c) Bruxa Má do Oeste"], "resposta": "c"},
-
-    {"pergunta": "Margaret Hamilton estudou no MIT?",
-     "opcoes": ["a) Falso", "b) Verdadeiro"], "resposta": "a"},
-
-    {"pergunta": "Em qual ano Margaret Hamilton nasceu?",
-     "opcoes": ["a) 1989", "b) 1936", "c) 1990"], "resposta": "b"},
-
-    {"pergunta": "Qual é o significado de MIT?",
-     "opcoes": ["a) Instituto de Tecnologia de Massachusetts",
-                "b) Ministério Internacional do Trabalhador",
-                "c) Módulo de Inclusão de Tributos"], "resposta": "a"},
-
-    {"pergunta": "Margaret Hamilton foi uma grande cientista da computação?",
-     "opcoes": ["a) Verdadeiro", "b) Falso"], "resposta": "a"}
+# Lista de perguntas
+perguntas = [
+    {
+        "pergunta": "1) Em qual programa espacial Margaret Hamilton esteve envolvida?",
+        "opcoes": ["Sputnik", "Gêmeos (Gemini)", "Mercúrio", "Apollo", "Artemis", "Voyager"],
+        "resposta": 3
+    },
+    {
+        "pergunta": "2) Em qual filme clássico Margaret Hamilton atuou?",
+        "opcoes": ["O Mágico de Oz", "Titanic", "E o Vento Levou", "Casablanca", "Caça as Bruxas", "Cantando na Chuva"],
+        "resposta": 0
+    },
+    {
+        "pergunta": "3) Em que ano aconteceu o primeiro pouso na Lua?",
+        "opcoes": ["2000", "1968", "1970", "1955", "1945", "1969"],
+        "resposta": 5
+    },
+    {
+        "pergunta": "4) Em que ano Margaret Hamilton recebeu a Medalha Presidencial da Liberdade?",
+        "opcoes": ["2018", "2019", "2016", "2020", "2010", "2014"],
+        "resposta": 2
+    },
+    {
+        "pergunta": "5) Quantos artigos Margaret Hamilton publicou aproximadamente?",
+        "opcoes": ["Mais de 10", "Mais de 150", "Menos de 5", "Mais de 50", "Mais de 130", "Exatos 100"],
+        "resposta": 4
+    },
+    {
+        "pergunta": "6) Qual personagem ela interpretou no Mágico de Oz?",
+        "opcoes": ["Dorothy", "Glinda", "Bruxa Má do Oeste", "Tia Em", "Leão", "Espantalho"],
+        "resposta": 2
+    },
+    {
+        "pergunta": "7) Margaret Hamilton estudou no MIT?",
+        "opcoes": ["Falso", "Verdadeiro"],
+        "resposta": 0
+    },
+    {
+        "pergunta": "8) Em qual ano ela nasceu?",
+        "opcoes": ["1939", "1989", "1936", "1990", "1920", "1950"],
+        "resposta": 2
+    },
+    {
+        "pergunta": "9) Ela criou qual termo?",
+        "opcoes": ["Hardware", "Engenharia de Software", "IA", "Ciência de Dados", "Internet", "Algoritmo"],
+        "resposta": 1
+    },
+    {
+        "pergunta": "10) O que significa MIT?",
+        "opcoes": [
+            "Instituto de Tecnologia de Massachusetts",
+            "Missão internacional de tecnologia",
+            "Ministério internacional do trabalhador",
+            "Módulo de inclusão de tributos",
+            "Manutenção Industrial Técnica",
+            "Marca de Inovação Tecnológica"
+        ],
+        "resposta": 0
+    }
 ]
 
-# -------- TELA INICIAL --------
+# ===== TELA INICIAL =====
 if st.session_state.pagina == "inicio":
-    st.title("Quiz Margaret Hamilton 🚀")
+    st.title("🚀Margaret Elaine Hamilton,a Mulher que Levou a Humanidade à Lua.🌕")
 
-    st.write("Seja bem-vindo(a)! 🌸")
-    st.write("✔ Acerto: +10 pontos")
+    st.write("Bem-vindo(a) ao Quiz em homenagem a Margaret Hamilton!")
+    st.write("🎯 Total: 100 pontos")
     st.write("❌ Erro: -5 pontos")
 
     if st.button("Iniciar Quiz"):
         st.session_state.pagina = "quiz"
         st.rerun()
 
-# -------- QUIZ --------
+# ===== QUIZ =====
 elif st.session_state.pagina == "quiz":
-    i = st.session_state.indice
+    i = st.session_state.pergunta_atual
+    pergunta = perguntas[i]
 
-    if i < len(quiz):
-        pergunta = quiz[i]
+    st.subheader(pergunta["pergunta"])
 
-        st.subheader(f"Pergunta {i+1}")
-        st.write(pergunta["pergunta"])
+    resposta = st.radio(
+        "Escolha uma opção:",
+        pergunta["opcoes"],
+        key=i
+    )
 
-        resposta = st.radio(
-            "Escolha uma opção:",
-            pergunta["opcoes"],
-            key=f"q_{i}",
-            index=None  # evita resposta automática
-        )
+    if st.button("Próxima"):
+        if pergunta["opcoes"].index(resposta) == pergunta["resposta"]:
+            st.session_state.pontuacao += 10
+            st.session_state.acertos += 1
+        else:
+            st.session_state.pontuacao -= 5
+            st.session_state.erros += 1
 
-        if st.button("Próxima"):
-            if resposta is None:
-                st.warning("⚠️ Escolha uma opção antes de continuar!")
-            else:
-                if not st.session_state.respondido:
-                    st.session_state.tentativas += 1
+        st.session_state.pergunta_atual += 1
 
-                    letra = resposta[0].lower()
+        if st.session_state.pergunta_atual >= len(perguntas):
+            st.session_state.pagina = "resultado"
 
-                    if letra == pergunta["resposta"]:
-                        st.session_state.placar += 10
-                        st.session_state.acertos += 1
-                    else:
-                        st.session_state.placar -= 5
-                        if st.session_state.placar < 0:
-                            st.session_state.placar = 0
-                        st.session_state.erros += 1
-
-                    st.session_state.respondido = True
-                    st.session_state.indice += 1
-                    st.rerun()
-    else:
-        st.session_state.pagina = "final"
         st.rerun()
 
-# -------- RESULTADO FINAL --------
-elif st.session_state.pagina == "final":
-    st.title("🏆 Resultado Final")
+# ===== RESULTADO FINAL =====
+elif st.session_state.pagina == "resultado":
+    if st.session_state.pontuacao < 0:
+        st.session_state.pontuacao = 0
 
-    st.write(f"🏆 Pontuação: {st.session_state.placar}")
-    st.write(f"🔁 Tentativas: {st.session_state.tentativas}")
+    st.title("🏆 RESULTADO FINAL")
+
+    st.write(f"Pontuação: {st.session_state.pontuacao} de 100")
     st.write(f"✅ Acertos: {st.session_state.acertos}")
     st.write(f"❌ Erros: {st.session_state.erros}")
+    st.write(f"📊 Total de perguntas: {len(perguntas)}")
 
-    st.write("🌸 Obrigado por participar do quiz! 🌸")
+    st.markdown("---")
+
+    st.write("🌸 Obrigado por participar do nosso quiz! 🌸")
+    st.write("Neste Dia das Mulheres, celebramos a força e a inteligência de todas as mulheres!")
+    st.write("✨ Nunca duvide do seu brilho! ✨")
 
     if st.button("Reiniciar"):
-        st.session_state.pagina = "inicio"
-        st.session_state.indice = 0
-        st.session_state.placar = 0
-        st.session_state.tentativas = 0
-        st.session_state.acertos = 0
-        st.session_state.erros = 0
-        st.session_state.respondido = False
+        for key in st.session_state.keys():
+            del st.session_state[key]
         st.rerun()
